@@ -139,7 +139,8 @@ class MainScreen extends StatelessWidget {
         clipper: clipper,
         alignment: Alignment.topRight,
         margin: EdgeInsets.only(top: 20),
-        backGroundColor: Colors.blue,
+        backGroundColor: Colors.red,
+        sender: true,
         child: Container(
           constraints: BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width * 0.7,

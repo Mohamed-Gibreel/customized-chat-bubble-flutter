@@ -20,18 +20,19 @@ class ChatBubble extends StatelessWidget {
   final Color? backGroundColor;
   final Color? shadowColor;
   final Alignment? alignment;
+  final bool? sender;
   final EdgeInsetsGeometry? padding;
 
-  ChatBubble({
-    this.clipper,
-    this.child,
-    this.margin,
-    this.elevation,
-    this.backGroundColor,
-    this.shadowColor,
-    this.alignment,
-    this.padding
-  });
+  ChatBubble(
+      {this.clipper,
+      this.child,
+      this.sender = false,
+      this.margin,
+      this.elevation,
+      this.backGroundColor,
+      this.shadowColor,
+      this.alignment,
+      this.padding});
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +40,32 @@ class ChatBubble extends StatelessWidget {
       alignment: alignment ?? Alignment.topLeft,
       margin: margin ?? EdgeInsets.all(0),
       child: PhysicalShape(
-        clipper: clipper as CustomClipper<Path>,
         elevation: elevation ?? 2,
-        color: backGroundColor ?? Colors.blue,
+        clipBehavior: Clip.antiAlias,
+        clipper: clipper as CustomClipper<Path>,
+        color: Colors.transparent,
         shadowColor: shadowColor ?? Colors.grey.shade200,
-        child: Padding(
-          padding: padding ?? setPadding(),
-          child: child ?? Container(),
-        ),
+        child: sender == false
+            ? Container(
+                color: Color(0xFFE7E7ED),
+                child: Padding(
+                  padding: padding ?? setPadding(),
+                  child: child ?? Container(),
+                ),
+              )
+            : Container(
+                // color: Colors.blue,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [Color(0xff614c9a), Color(0xff2ad3f8)]),
+                ),
+                child: Padding(
+                  padding: padding ?? setPadding(),
+                  child: child ?? Container(),
+                ),
+              ),
       ),
     );
   }
